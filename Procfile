@@ -1,0 +1,1 @@
+web: gunicorn mango_hub.wsgi

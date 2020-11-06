@@ -1,0 +1,105 @@
+{% extends '../base.html' %}
+{% block content%}
+
+
+<section class="ad-post bg-gray py-5">
+    <div class="container">
+    <table class="table table-bordered product-table">
+									<tbody>
+										<tr>
+											<td>Type Of Mango</td>
+											<td>{{current.mangoes_of.Type_Of_Mango}} GRADE</td>
+										</tr>
+										<tr>
+											<td>Weight</td>
+											<td>{{current.mangoes_of.weigth}} K.G.</td>
+										</tr>
+										<tr>
+											<td>Ripe</td>
+											<td>{{current.mangoes_of.ripe}}</td>
+										</tr>
+										<tr>
+											<td>Packged At</td>
+											<td>{{current.mangoes_of.pkgd_at}}</td>
+										</tr>
+                                        <tr>
+											<td>Sold At</td>
+											<td>{{deliveries.delivery_at}}</td>
+										</tr>
+										<tr>
+											<td>Price Per Box</td>
+											<td id='ppb'>{{current.mangoes_of.price}}</td>
+										</tr>
+										
+										
+									</tbody>
+								</table>
+
+    <table class="table table-bordered product-table">
+									<tbody>
+
+										<tr>
+											<td>Buyer Informations</td>
+										</tr>
+										<tr>
+											<td>Buyer</td>
+											<td>{{deliveries.product.owner.username}}</td>
+										</tr>
+										<tr>
+											<td>Contact</td>
+											<td>{{deliveries.product.owner.contact}}</td>
+										</tr>
+										<tr>
+											<td>Email Address</td>
+											<td>{{deliveries.product.owner.email}}</td>
+										</tr>
+										<tr>
+											<td>Address</td>
+											<td>{{deliveries.product.owner.address}}</td>
+										</tr>
+                                        <tr>
+											<td>QTY Bought</td>
+											<td>{{deliveries.product.Qty}}</td>
+										</tr>
+										
+										<tr>
+											<td>Total Bill</td>
+											<td>{{deliveries.product.total_bill}}</td>
+										</tr>
+                                        <tr>
+											<td>Delivery Status</td>
+											<td>Delivered? {{deliveries.diliverd}}</td>
+										</tr>
+										
+									</tbody>
+								</table>
+         <form action="#" method="POST" enctype="multipart/form-data">
+            <!-- Post Your ad start -->
+            <fieldset class="border border-gary p-4 mb-5">
+                                   {% csrf_token %}
+
+                  <p><label for="id_owner_of_product">Owner of product:</label> <select name="owner_of_product" required id="id_owner_of_product">
+  <option value="{{deliveries.owner_of_product.id}}" selected>{{deliveries.owner_of_product}}</option>
+</select></p>
+<p><label for="id_product">Buyer:</label> <select name="product" required id="id_product">
+  <option value="{{deliveries.product.id}}" selected>{{deliveries.product.owner.username}}</option>
+</select></p>
+<p><label for="id_diliverd">Diliverd:</label> <select name="diliverd" id="id_diliverd">
+  <option value="yes">yes</option>
+
+  <option value="no" selected>no</option>
+
+</select></p>
+<p><label for="id_delivery_at">Delivery at:</label> <input type="text" name="delivery_at" value="2020-11-05 07:28:31" required id="id_delivery_at"><input type="hidden" name="initial-delivery_at" value="2020-11-05 07:28:31" id="initial-id_delivery_at"></p>
+                             <button type="submit" class="btn btn-primary d-block mt-2">Post Your Sale</button>
+                    </div>
+            </fieldset>
+
+            <!-- Post Your ad end -->
+            </form>
+         
+         
+            </div>
+                  </section>
+           
+{% endblock %}

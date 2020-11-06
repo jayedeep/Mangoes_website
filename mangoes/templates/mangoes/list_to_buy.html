@@ -1,0 +1,135 @@
+{% extends '../base.html' %}
+
+{% block content %}
+
+<section class="page-search">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- Advance Search -->
+				<div class="advance-search">
+				 <form>
+											<div class="form-row">
+												
+												<div class="form-group col-md-3">
+												<label for="id_owner">Owner:</label> 
+													<select class="w-100 form-control mt-lg-1 mt-md-2" name="owner" id="id_owner">
+														
+														  <option value="" selected>All</option>
+													<option value="1">jaydeep</option>
+													<option value="2">admin</option>
+													<option value="3">jay</option>
+													<option value="4">bhautik</option>
+													<option value="5">navnitbhai</option>
+													</select>
+												</div>
+
+												<div class="form-group col-md-3">
+												<label for="id_ripe">Ripe:</label>
+													<select class="w-100 form-control mt-lg-1 mt-md-2" name="ripe" id="id_ripe">
+  													<option value="" selected>All</option>
+													<option value="yes">yes</option>
+ 													 <option value="no">no</option>
+													</select>
+												</div>
+
+												<div class="form-group col-md-3">
+												<label for="id_pkgd_at">packege created at:</label> 
+													<input type="text" name="pkgd_at" id="id_pkgd_at" class="form-control my-2 my-lg-1"  placeholder="created at">
+												</div>
+												
+												<div class="form-group col-md-3">
+													<label for="id_price">Price:</label>
+													<input type="number" name="price" step="any" id="id_price" class="form-control my-2 my-lg-1"  placeholder="Price">
+												</div>
+
+												<div class="form-group col-md-3">
+													<label for="id_discount">Discount:</label> 
+													<input type="number" name="discount" step="any" id="id_discount" class="form-control my-2 my-lg-1"  placeholder="Discount">
+												</div>
+
+												<div class="form-group col-md-2 align-self-center">
+													<button type="submit" class="btn btn-primary">Search Now</button>
+												</div>
+											</div>
+										</form> 
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="section-sm">
+	<div class="container">
+
+
+
+
+    {% for i in filter.qs %}
+				{% if i.total_boxes > 0 %}
+
+				<!-- ad listing list  -->
+				<div class="ad-listing-list mt-20">
+    <div class="row p-lg-3 p-sm-5 p-4">
+        <div class="col-lg-4 align-self-center">
+            <a href="{% url 'single_page' i.id %}">
+                <img src="{{ i.photo1.url}}" class="img-fluid" alt="">
+            </a>
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-6 col-md-10">
+                    <div class="ad-listing-content">
+                        <div>
+                            <a href="single.html" class="font-weight-bold">{{i.owner.farm_name}} {{i.Type_Of_Mango}} Grade </a>
+                        </div>
+                        <ul class="list-inline mt-2 mb-3">
+                            <li class="list-inline-item"><a href="category.html"> <i class="fa fa-folder-open-o"></i> Own By: {{i.owner.username}}</a></li>
+                            <li class="list-inline-item"><a href=""><i class="fa fa-calendar"></i>{{i.pkgd_at}}</a></li>
+                        </ul>
+                        {% if i.discount == 0 %}
+                        <p class="pr-5">Buy More and Get More it is owr moto for the customers</p>
+                        {% else %}
+                        <p class="pr-5">Buy Upto {{i.limit}} boxes and Get Discount {{i.discount}}%</p>
+                        {% endif%}
+                       
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+				<!-- ad listing list  -->
+
+				{% comment %} <!-- pagination -->
+				<div class="pagination justify-content-center py-4">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							<li class="page-item">
+								<a class="page-link" href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+									<span class="sr-only">Previous</span>
+								</a>
+							</li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item active"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item">
+								<a class="page-link" href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+									<span class="sr-only">Next</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<!-- pagination --> {% endcomment %}
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

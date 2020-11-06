@@ -1,0 +1,123 @@
+{% extends '../base.html' %}
+{% block content%}
+
+
+<section class="ad-post bg-gray py-5">
+    <div class="container">
+    <table class="table table-bordered product-table">
+									<tbody>
+										<tr>
+											<td>Type Of Mango</td>
+											<td>{{single.Type_Of_Mango}} GRADE</td>
+										</tr>
+										<tr>
+											<td>Weight</td>
+											<td>{{single.weigth}} K.G.</td>
+										</tr>
+										<tr>
+											<td>Ripe</td>
+											<td>{{single.ripe}}</td>
+										</tr>
+										<tr>
+											<td>Packged At</td>
+											<td>{{single.pkgd_at}}</td>
+										</tr>
+										<tr>
+											<td>Price Per Box</td>
+											<td id='ppb'>{{single.price}}</td>
+										</tr>
+										<tr>
+											<td>Total Boxes</td>
+											<td >{{single.total_boxes}}</td>
+										</tr>
+                                        <tr>
+											<td>Limit Above Discount</td>
+											<td id="limit">{{single.limit}}</td>
+										</tr>
+										<tr>
+											<td>Discount</td>
+											<td id="disc">{{single.discount}}</td>
+										</tr>
+										
+									</tbody>
+								</table>
+        <form action="#" method="POST" enctype="multipart/form-data">
+            <!-- Post Your ad start -->
+            <fieldset class="border border-gary p-4 mb-5">
+            {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>Post Your Mangoes Sale</h3>
+                        </div>
+                        <div class="col-lg-6">
+                            <h6 class="font-weight-bold pt-4 pb-1">
+                             <label for="id_owner">Owner:</label> 
+                              </h6>
+                            <select name="owner" required id="id_owner">
+                            <option value="{{request.user.id}}">{{request.user.username}}</option>
+                            </select>
+                            </div>
+                         <div class="col-lg-12">
+                            <h6 class="font-weight-bold pt-4 pb-1"><label for="id_Qty"> Qty You want to buy:</label></h6>
+                         <input type="number" name="Qty" onChange="myFunction()" required id="id_Qty" class="border w-100 p-2 bg-white text-capitalize" >
+                            </div>
+
+                            {% comment %} <div class="col-lg-12">
+                            <h6 class="font-weight-bold pt-4 pb-1"><label for="id_created_at">Created at:</label> </h6> {% endcomment %}
+                            <input type="text" name="created_at" value="2020-11-04 10:01:23" required id="id_created_at" hidden><input type="hidden" name="initial-created_at" value="2020-11-04 10:01:23" id="initial-id_created_at" hidden>                            {% comment %} </div> {% endcomment %}
+
+                        <div class="col-lg-6">
+                            <h6 class="font-weight-bold pt-4 pb-1"> <label for="id_mangoes_of">Mangoes's Farm Name:</label> </h6>
+                            <select name="mangoes_of" required id="id_mangoes_of">
+                            <option value="{{single.id}}" selected>{{single.owner.farm_name}}</option>
+                            </select>
+                            </div>
+                   
+
+                     <div class="col-lg-6">
+                            <h6 class="font-weight-bold pt-4 pb-1"><label for="id_total_bill">Total bill(with Discount if it have):</label> </h6>
+                            <input type="number" name="total_bill" required id="id_total_bill" class="border w-100 p-2 bg-white text-capitalize">
+                    </div> 
+                             <button type="submit" class="btn btn-primary d-block mt-2">Post Your Sale</button>
+                    </div>
+            </fieldset>
+
+            <!-- Post Your ad end -->
+            </form>
+           <div class="col-lg-6">
+                            <h6 class="font-weight-bold pt-4 pb-1"><label for="bill">bill Without Discount</label> </h6>
+                            <input type="number" name="bill" required id="bill" class="border w-100 p-2 bg-white text-capitalize">
+                    </div>  
+            </div>
+
+            
+                  </section>
+         
+    <script>
+                function myFunction() {
+                    var qty=document.querySelectorAll( "#id_Qty");
+                    var price_per_box=document.querySelectorAll("#ppb")
+                    var discount=document.querySelectorAll("#disc")[0].innerText
+                    var limit=document.querySelectorAll("#limit")[0].innerText
+                    price_per_box=Number(price_per_box[0].innerText)
+                    var temp_qty=Number(qty[0].value)
+                    var total=price_per_box*temp_qty
+                    document.querySelector("#bill").value = total;
+                    var withdisc;
+                    if (discount>0 && temp_qty>=limit){
+                        withdisc=total*discount
+                        withdisc=withdisc/100
+                        withdisc=total-withdisc
+                        console.log(withdisc)
+                        document.querySelector("#id_total_bill").value = withdisc;
+
+                    }
+                    else{
+                        withdisc=total
+                        document.querySelector("#id_total_bill").value = withdisc;
+
+                    }
+
+                }
+            </script>  
+{% endblock %}
